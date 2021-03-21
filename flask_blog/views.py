@@ -15,11 +15,12 @@ def login():
 	error = None
 	if request.method == 'POST':
 		if request.form['username'] != app.config['USERNAME']:
-			print('ユーザ名が異なります')
+			flash('ユーザ名が異なります')
 		elif request.form['password'] != app.config['PASSWORD']:
-			print('パスワードが異なります')
+			flash('パスワードが異なります')
 		else:
 			session['logged_in'] = True
+			flash('ログインしました')
 			return redirect('/') # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
 	return render_template('login.html')
 
@@ -28,4 +29,5 @@ def login():
 @app.route('/logout')
 def logout():
 	session.pop('logged_in', None)
+	flash('ログアウトしました')
 	return redirect('/') # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
