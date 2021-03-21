@@ -5,7 +5,7 @@ from flask_blog import app # __init__.pyで作成したappをインポート
 @app.route('/')
 def show_entries():
 	if not session.get('logged_in'):
-		return redirect('/login')
+		return redirect(url_for('login'))
 	return render_template('entries/index.html')
 # template以下に有るentries/index.htmlを返して(レンダリングして)あげると言う設定
 # パスにtemplateを設定しないのは、flaskではtemplatesフォルダ以下に自動でhtmlファイルがある(ルール)と認識するから。
@@ -21,7 +21,7 @@ def login():
 		else:
 			session['logged_in'] = True
 			flash('ログインしました')
-			return redirect('/') # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
+			return redirect(url_for('show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
 	return render_template('login.html')
 
 # 正しい場合には/にリダイレクト、そうで無い場合はrender_template('login.html')のログインフォームを再度表示。
@@ -30,4 +30,4 @@ def login():
 def logout():
 	session.pop('logged_in', None)
 	flash('ログアウトしました')
-	return redirect('/') # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
+	return redirect(url_for('show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
