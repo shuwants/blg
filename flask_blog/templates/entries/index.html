@@ -2,5 +2,17 @@
 
 {% extends "layout.html" %} <!- 最初にこの宣言をする事で、layout.html ファイルの内容を引き継ぎ、ベースとする ->
 {% block body %}
-投稿がありません
+<ul class="list-group list-group-flush">
+
+    {% for entry in entries %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ entry.title }}</h5>
+        </div>
+    </div>
+    {% else %}
+    投稿がありません
+    {% endfor %}
+</ul>
+
 {% endblock %}
