@@ -39,3 +39,12 @@ def new_entry():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('entries/new.html')
+
+
+@app.route('/entries/<int:id>', methods=['GET'])  # <id>だけもok、必ず整数を受け取る様制限したいので<int:id>と書くことでidに整数以外の値が渡された時にエラーになる様に。
+def show_entry(id):  # show_entry(id)と引き数名を追加し、変数idを参照出来る様にする
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    entry = Entry.query.get(id)
+    return render_template('entries/show.html', entry=entry)
+# show_entryメソッド内では、entry = Entry.query.get(id)と書くだけで渡されたidの記事をdbから取得する事が出来る。
