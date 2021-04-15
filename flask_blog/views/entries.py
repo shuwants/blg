@@ -69,3 +69,13 @@ def update_entry(id):
     db.session.commit()
     flash('記事が更新されました')
     return redirect(url_for('show_entries'))
+
+@app.route('/entries/<int:id>/delete', methods=['POST'])
+def delete_entry(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    entry = Entry.query.get(id)
+    db.session.delete(entry)
+    db.session.commit()
+    flash('投稿が削除されました')
+    return redirect(url_for('show_entries'))
