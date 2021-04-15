@@ -48,3 +48,24 @@ def show_entry(id):  # show_entry(id)と引き数名を追加し、変数idを�
     entry = Entry.query.get(id)
     return render_template('entries/show.html', entry=entry)
 # show_entryメソッド内では、entry = Entry.query.get(id)と書くだけで渡されたidの記事をdbから取得する事が出来る。
+
+
+@app.route('/entries/<int:id>/edit', methods=['GET'])
+def edit_entry(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    entry = Entry.query.get(id)
+    return render_template('entries/edit.html', entry=entry)
+
+
+@app.route('/entries/<int:id>/update', methods=['POST'])
+def update_entry(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    entry = Entry.query.get(id)
+    entry.title = request.form['title']
+    entry.text = request.form['text']
+    db.session.merge(entry)  # 作成時はaddだったが、更新はこれ。
+    db.session.commit()
+    flash('記事が更新されました')
+    return redirect(url_for('show_entries'))
