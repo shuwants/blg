@@ -6,6 +6,9 @@ app.config.from_object('flask_blog.config')
 
 db = SQLAlchemy(app) # これで他のプログラムはdbと言う変数を参照する事でデータベースを扱える様になった。
 
+from flask_blog.views.views import view
+app.register_blueprint(view)
+
 from flask_blog.views.entries import entry  # __init__.pyにBlueprintアプリケーションを登録
 app.register_blueprint(entry, url_prefix='/users')
 

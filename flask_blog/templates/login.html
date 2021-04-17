@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block body %}
-<form action="{{ url_for('login') }}" method=post>
+<form action="{{ url_for('view.login') }}" method=post>
     <!- http://127.0.0.1:5000/loginというURLに、POSTというHTTPリクエストメソッドでフォームに入力されたデータが送られる
     リンクをクリックするなどデータを読み込む時はGET, データを送る時はPOSTメソッドを使う。->
     <div class="form-group">
