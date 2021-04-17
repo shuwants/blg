@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy # SQLAlchemy ライブラリをインス
 db = SQLAlchemy() # これで他のプログラムはdbと言う変数を参照する事でデータベースを扱える様になった。
 
 
-def create_app():
+def create_app(test_config=None):  # テスト用のconfigを受け取り、設定する事ができるようになる
     app = Flask(__name__) # アプリケーション本体
     app.config.from_object('flask_blog.config')
 
