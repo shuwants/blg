@@ -1,5 +1,5 @@
 from flask import request, redirect, url_for, render_template, flash, session # 後使用も含め必要パッケージインストール
-from flask_blog import app # __init__.pyで作成したappをインポート
+from flask import current_app as app  # __init__.pyで作成したappをインポート
 from functools import wraps
 from flask import Blueprint
 
