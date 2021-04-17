@@ -7,7 +7,7 @@ def login_required(view):
 	@wraps(view)
 	def inner(*args, **kwargs):
 		if not session.get('logged_in'):
-			return redirect(url_for('login'))
+			return redirect(url_for('entry.login'))
 		return view(*args, **kwargs)
 	return inner
 
@@ -25,13 +25,18 @@ def login():
 		else:
 			session['logged_in'] = True
 			flash('ログインしました')
-			return redirect(url_for('show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
+			return redirect(url_for('entry.show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
 	return render_template('login.html')
-
 # 正しい場合には/にリダイレクト、そうで無い場合はrender_template('login.html')のログインフォームを再度表示。
+
 
 @app.route('/logout')
 def logout():
 	session.pop('logged_in', None)
 	flash('ログアウトしました')
-	return redirect(url_for('show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
+	return redirect(url_for('entry.show_entries')) # 直接リンク名では無く、ビューに定義しているメソッド名を指定↓したコードが下記。
+
+
+@app.errorhandler(404)  # 存在しないURLにアクセスした時など、404エラーが発生した時に行わせる処理を定義する
+def non_existant_route(error):
+	return redirect(url_for('login'))  # これでログインURLにリダイレクトさせる
